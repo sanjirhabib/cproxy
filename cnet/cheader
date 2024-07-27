@@ -1,0 +1,51 @@
+#!/bin/bash
+if [[ "$1" == "-h" ]]; then
+	echo ""
+	echo "Usage : cheader <file.c>"
+	exit -1
+fi
+outdir=$2
+if [[ ! $outdir ]]; then
+	outdir=.
+fi
+headerfile=$(basename $1 .c).h
+outfile=$outdir/$headerfile
+echo writing to $outfile
+echo '#pragma once' > $outfile
+gawk "
+#mark header
+
+	/\/\*header/{header=1;next}
+
+#header end
+
+	/end\*\//{header=0;next}
+
+	/\/\/noheader/{noheader=1;next}
+	/\/\/end/{noheader=0;isenum=0;next}
+
+#enum start
+	/^\/\/enum$/{isenum=1;next}
+
+#print header, and loop
+
+	header{print;next;}
+	noheader{next;}
+
+#enum lines
+isenum && match(\$0,/(\"[^\"]+\"),\/\/\/(.*)/,out){print \"\t\" out[2]; next}
+isenum && match(\$0,/(\"[^\"]+\").*/,out){print \"\t\" substr(out[1],2,length(out[1])-2) \",\"; next}
+
+#function definition
+
+	/^[a-zA-Z].*)[ ]*?{$/ && !/static/ {print substr(\$0,0,length(\$0)-1) \";\"; next; }
+
+# lines starting with 3 slashes ///
+	/[^/]\/\/\/[^/](.*)/ {print substr(\$0,index(\$0,\"///\")+3); next; }
+
+# include other files, except this one
+
+	/^#/ && !/\"$headerfile\"/{print; next}
+#	/^#/ && !/^#include/ && !/\"$headerfile\"/{print; next}
+
+	" $1 >> $outfile
