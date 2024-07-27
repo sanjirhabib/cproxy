@@ -2,7 +2,7 @@ CFLAGS=-g -lm -fPIC -fvisibility=hidden -Icstr -Lcstr -lcstr -Icnet -Lcnet -lcne
 
 
 
-cproxy: lib/proxy.o proxy_main.c cstr/libcstr.a cnet/libcnet.a lib/proxy_main.o 
+cproxy: lib/proxy.o cstr/libcstr.a cnet/libcnet.a lib/proxy_main.o 
 	gcc -o $@ $^ $(CFLAGS)
 
 all:
