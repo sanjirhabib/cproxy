@@ -1,0 +1,17 @@
+[Unit]
+Description=CProxy service
+After=network.target network-online.target ssh.service
+
+
+[Service]
+User=habib
+WorkingDirectory=/web/cproxy
+# discard the verbose running log
+StandardOutput=null
+#Restart=always
+#RestartSec=20s
+
+ExecStart=/web/cproxy/cproxy /web/cproxy/server.conf
+
+[Install]
+WantedBy=multi-user.target
