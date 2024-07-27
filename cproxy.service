@@ -11,7 +11,7 @@ StandardOutput=null
 #Restart=always
 #RestartSec=20s
 
-ExecStart=/web/cproxy/cproxy /web/cproxy/server.conf
+ExecStart=/usr/local/bin/cproxy /etc/cproxy.conf
 
 [Install]
 WantedBy=multi-user.target

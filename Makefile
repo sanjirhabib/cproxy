@@ -44,7 +44,9 @@ lib/%.o: %.c
 	gcc -c -o $@ $< $(CFLAGS)
 
 install:
+	sudo cp cproxy /usr/local/bin/
 	sudo cp cproxy.service /etc/systemd/system/
+	sudo cp cproxy.conf /etc/
 	sudo systemctl enable cproxy
 	sudo systemctl restart cproxy
 	sudo systemctl status cproxy
@@ -55,9 +57,13 @@ uninstall:
 	sudo rm /etc/systemd/system/cproxy
 	sudo systemctl daemon-reload
 	echo cproxy service removed
+	sudo rm -f /usr/local/bin/cproxy
+	sudo rm -f /etc/cproxy.conf
 
 reinstall:
 	sudo cp cproxy.service /etc/systemd/system/
+	sudo cp cproxy /usr/local/bin/
+	sudo cp cproxy.conf /etc/
 	sudo systemctl daemon-reload
 	sudo systemctl restart cproxy
 	sudo systemctl status cproxy
