@@ -1,5 +1,6 @@
 # cproxy
-Socks 4 and 5 proxy server in C using epoll()
+Socks 4 and 5 proxy server in C using epoll().
+Uses a custom DNS resolver so that DNS calls can be epolled too.
 
 # Installation
 ```
