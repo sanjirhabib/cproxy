@@ -8,7 +8,7 @@ clean:
 	rm -f include/*.h
 
 lib/%.o: %.c
-	cheader $< include
+	./cheader $< include
 	gcc -c -o $@ $< $(CFLAGS)
 
 testmap: testmap.c lib/var.o

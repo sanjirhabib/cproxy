@@ -1,13 +1,9 @@
 CFLAGS=-g -lm -fPIC -fvisibility=hidden -Icstr -Lcstr -lcstr -Icnet -Lcnet -lcnet -lssl -lcrypto -Iinclude -O2 #-fsanitize=address
 
 
-cproxy: lib/proxy.o proxy_main.c cstr/libcstr.a cnet/libcnet.a
-	make -C cstr
-	make -C cnet
-	sed -i "s/^#define proxy_version .*$$/#define proxy_version \"$$(today)\"/" proxy_main.c
-	gcc -c -o lib/proxy_main.o proxy_main.c $(CFLAGS)
-	gcc -o $@ $^ $(CFLAGS)
 
+cproxy: lib/proxy.o proxy_main.c cstr/libcstr.a cnet/libcnet.a lib/proxy_main.o 
+	gcc -o $@ $^ $(CFLAGS)
 
 all:
 	make -C cstr clean
@@ -16,6 +12,13 @@ all:
 	make -C cstr
 	make -C cnet
 	make -C .
+
+cnet/libcnet.a: cnet
+	make -C cnet
+
+cstr/libcstr.a: cstr
+	make -C cstr
+
 
 run:
 	cproxy server.conf
@@ -37,7 +40,7 @@ proxyon:
 
 
 lib/%.o: %.c
-	cheader $< include
+	./cheader $< include
 	gcc -c -o $@ $< $(CFLAGS)
 
 install:
