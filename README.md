@@ -1,6 +1,12 @@
 # cproxy
 Socks 4 and 5 proxy server in C using epoll().
-Uses a custom DNS resolver so that DNS calls can be epolled too.
+
+
+# Featrures
+- Uses a custom DNS resolver so that DNS calls can be epolled too.
+- No 3rd party dependance or library used.
+- valgrind tested : no memory leak or out of bound memory touch.
+- No GC. Manual memory management.
 
 # Installation
 ```
