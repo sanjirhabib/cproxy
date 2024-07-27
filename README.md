@@ -19,12 +19,12 @@ cproxy cproxy.conf
 To install it as a systemd service use the makefile
 
 ```
-make install
+sudo make install
 ```
 To uninstall
 
 ```
-make uninstall
+sudo make uninstall
 ```
 
 This code base uses a bash script called cheader in root directory
