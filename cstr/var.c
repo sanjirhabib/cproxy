@@ -222,7 +222,7 @@ string chop(string in,int len){
 		return (string){0};
 	}
 	datasize1(in);
-	memmove(in.str,in.str+len*in.datasize,len*in.datasize);
+	memmove(in.str,in.str+len*in.datasize,(in.len-len)*in.datasize);
 	in.len-=len;
 	return in;
 }
