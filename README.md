@@ -35,8 +35,8 @@ sudo make uninstall
 ```
 
 This code base uses a bash script called cheader in root directory
-to generate the c header files automatically. If that does't on your system
-keep the pregenerated header files in include/ and comment out calles to cheader
-in all the Makefiles
+to generate the c header files automatically. If that does't work on your system
+keep the pre-generated header files in include/ and comment out calles to cheader
+in all of the Makefiles
 
 It uses two libraries called cstr and cnet which are included in this source.
